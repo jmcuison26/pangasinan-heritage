@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/main.css'],
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/', '/islands'],
+    },
+  },
   components: [
     { path: '~/components/atoms', pathPrefix: false },
     { path: '~/components/molecules', pathPrefix: false },
