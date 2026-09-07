@@ -1,8 +1,8 @@
 export function useImage() {
+  const base = process.env.GITHUB_ACTIONS ? '/pangasinan-heritage' : ''
+
   function img(path: string): string {
-    // path should start with /images/...
-    // useAsset handles the base URL automatically via Nuxt
-    return path
+    return `${base}${path}`
   }
 
   return { img }

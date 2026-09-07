@@ -6,19 +6,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   app: {
     baseURL: process.env.GITHUB_ACTIONS ? '/pangasinan-heritage/' : '/',
-  },
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: ['/', '/islands'],
-    },
-  },
-  components: [
-    { path: '~/components/atoms', pathPrefix: false },
-    { path: '~/components/molecules', pathPrefix: false },
-    { path: '~/components/organisms', pathPrefix: false },
-  ],
-  app: {
     head: {
       title: "Alaminos' Hundred Islands — Pangasinan Heritage",
       meta: [
@@ -32,4 +19,15 @@ export default defineNuxtConfig({
       ],
     },
   },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/', '/islands'],
+    },
+  },
+  components: [
+    { path: '~/components/atoms', pathPrefix: false },
+    { path: '~/components/molecules', pathPrefix: false },
+    { path: '~/components/organisms', pathPrefix: false },
+  ],
 })
