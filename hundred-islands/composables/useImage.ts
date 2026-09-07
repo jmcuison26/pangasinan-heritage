@@ -1,10 +1,8 @@
 export function useImage() {
-  const config = useRuntimeConfig()
-  const baseURL = config.app.baseURL?.replace(/\/$/, '') ?? ''
-
   function img(path: string): string {
     // path should start with /images/...
-    return `${baseURL}${path}`
+    // useAsset handles the base URL automatically via Nuxt
+    return path
   }
 
   return { img }

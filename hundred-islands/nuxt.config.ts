@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/main.css'],
   app: {
-    baseURL: '/pangasinan-heritage/',
+    baseURL: process.env.GITHUB_ACTIONS ? '/pangasinan-heritage/' : '/',
   },
   nitro: {
     prerender: {

@@ -32,6 +32,8 @@ jobs:
       - name: Generate static site
         run: npm run generate
         working-directory: hundred-islands
+        env:
+          GITHUB_ACTIONS: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
