@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomic Design System Manual — Hundred Islands</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+    body { font-family: 'Inter', sans-serif; background: #030712; color: #f9fafb; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    pre { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; overflow-x: auto; font-size: 13px; line-height: 1.7; }
+    .keyword { color: #7dd3fc; }
+    .string  { color: #86efac; }
+    .comment { color: #64748b; }
+    .tag     { color: #f472b6; }
+    .attr    { color: #fbbf24; }
+    .type    { color: #c084fc; }
+    .fn      { color: #38bdf8; }
+    pre span { white-space: pre; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 999px; }
+    .atom-pill { background: rgba(20,184,166,0.15); color: #2dd4bf; }
+    .molecule-pill { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+    .organism-pill { background: rgba(244,114,182,0.15); color: #f9a8d4; }
+    .section-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 40px; margin-bottom: 48px; }
+    .preview-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px; margin-bottom: 24px; }
+    .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #2dd4bf; margin-bottom: 12px; display: block; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: rgba(45,212,191,0.1); color: #2dd4bf; text-align: left; padding: 12px 16px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+    td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
+    tr:last-child td { border-bottom: none; }
+    h1 { font-size: 56px; font-weight: 900; }
+    h2 { font-size: 32px; font-weight: 900; margin-bottom: 8px; }
+    h3 { font-size: 18px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin: 28px 0 12px; }
+    p { color: #94a3b8; line-height: 1.8; margin-bottom: 14px; font-size: 15px; }
+    hr { border-color: rgba(255,255,255,0.06); margin: 56px 0; }
+    pre { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 24px; overflow-x: auto; font-size: 14px; line-height: 1.8; }
+    /* Print styles */
+    @media print {
+      body { background: white; color: black; }
+      .section-card { border: 1px solid #e2e8f0; break-inside: avoid; }
+      .preview-box { border: 1px solid #e2e8f0; }
+      pre { background: #f8fafc; border: 1px solid #e2e8f0; }
+    }
+  </style>
+</head>
+<body>
+
+<div style="max-width:1100px; margin:0 auto; padding:56px 32px;">
+
+  <!-- Cover -->
+  <div style="text-align:center; padding:80px 0 64px;">
+    <div style="font-size:64px; margin-bottom:16px;">🏝️</div>
+    <div class="pill atom-pill" style="margin: 0 auto 16px;">Deliverable 1.2</div>
+    <h1 style="background:linear-gradient(135deg,#2dd4bf,#38bdf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; margin-bottom:16px;">
+      Atomic Design System Manual
+    </h1>
+    <p style="font-size:18px; max-width:500px; margin:0 auto 8px;">Pangasinan Heritage Digital Showcase</p>
+    <p style="color:#2dd4bf; font-size:14px;">Alaminos' Hundred Islands National Park</p>
+    <div style="display:flex; justify-content:center; gap:12px; margin-top:24px; flex-wrap:wrap;">
+      <span class="pill atom-pill">Vue 3</span>
+      <span class="pill molecule-pill">Nuxt.js 3</span>
+      <span class="pill organism-pill">Tailwind CSS</span>
+      <span class="pill" style="background:rgba(251,191,36,0.15);color:#fbbf24;">Brad Frost's Atomic Design</span>
+    </div>
+  </div>
+
+  <!-- Level indicator -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:64px; text-align:center;">
+    <div style="background:rgba(45,212,191,0.08); border:1px solid rgba(45,212,191,0.2); border-radius:16px; padding:24px;">
+      <div style="font-size:32px; font-weight:900; color:#2dd4bf;">5</div>
+      <div class="pill atom-pill" style="margin:8px auto 0;">Atoms</div>
+    </div>
+    <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.2); border-radius:16px; padding:24px;">
+      <div style="font-size:32px; font-weight:900; color:#a5b4fc;">3</div>
+      <div class="pill molecule-pill" style="margin:8px auto 0;">Molecules</div>
+    </div>
+    <div style="background:rgba(244,114,182,0.08); border:1px solid rgba(244,114,182,0.2); border-radius:16px; padding:24px;">
+      <div style="font-size:32px; font-weight:900; color:#f9a8d4;">2</div>
+      <div class="pill organism-pill" style="margin:8px auto 0;">Organisms</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ ATOMS ═══════════════════════════ -->
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:32px;">
+    <span class="pill atom-pill" style="font-size:13px; padding:6px 16px;">Level 1</span>
+    <h2 style="margin:0; font-size:36px;">Atoms</h2>
+  </div>
+  <p>Atoms are the smallest, indivisible UI building blocks. They cannot be broken down further without losing their purpose.</p>
+  <hr />
+
+  <!-- ── ATOM 1: BUTTON ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill atom-pill">Atom 1</span>
+      <h2 style="margin:0;">Button</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">📁 components/atoms/BaseButton.vue</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="display:flex; flex-wrap:wrap; gap:20px; align-items:center;">
+      <button style="background:#0d9488;color:white;font-weight:700;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;font-size:16px;">Primary Button</button>
+      <button style="background:white;color:#0d9488;font-weight:700;padding:14px 32px;border-radius:999px;border:2px solid #0d9488;cursor:pointer;font-size:16px;">Secondary Button</button>
+      <button style="background:transparent;color:#0d9488;font-weight:700;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;font-size:16px;">Ghost Button</button>
+      <div style="width:100%;height:1px;background:rgba(255,255,255,0.06);margin:4px 0;"></div>
+      <button style="background:#0d9488;color:white;font-weight:700;padding:8px 20px;border-radius:999px;border:none;cursor:pointer;font-size:13px;">Small</button>
+      <button style="background:#0d9488;color:white;font-weight:700;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;font-size:16px;">Medium</button>
+      <button style="background:#0d9488;color:white;font-weight:700;padding:18px 40px;border-radius:999px;border:none;cursor:pointer;font-size:18px;">Large</button>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Button atom is the foundational interactive element used for all CTAs across the platform. <strong style="color:white;">Primary</strong> is used for main actions (e.g., "Explore Now", "Plan Your Visit"). <strong style="color:white;">Secondary</strong> is used for supporting actions on cards ("Learn More"). <strong style="color:white;">Ghost</strong> is used for low-priority utility actions ("Clear Search"). The <code style="color:#86efac;">href</code> prop automatically renders it as an <code style="color:#86efac;">&lt;a&gt;</code> tag when a link is needed.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Breakpoint</th><th>Behavior</th></tr>
+      <tr><td>Mobile (&lt; sm)</td><td>Full width inside mobile nav drawer; inline otherwise</td></tr>
+      <tr><td>Tablet (sm+)</td><td>Inline-flex with auto width</td></tr>
+      <tr><td>All sizes</td><td>Minimum 44×44px touch target (WCAG 2.5.5)</td></tr>
+    </table>
+    <p>Size is controlled via the <code style="color:#86efac;">size</code> prop: <code style="color:#86efac;">sm</code> for cards/nav, <code style="color:#86efac;">md</code> for standard CTAs, <code style="color:#86efac;">lg</code> for hero sections.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;component</span>
+    <span class="attr">:is</span>=<span class="string">"href ? 'a' : 'button'"</span>
+    <span class="attr">:href</span>=<span class="string">"href"</span>
+    <span class="attr">:type</span>=<span class="string">"href ? undefined : type"</span>
+    <span class="attr">:disabled</span>=<span class="string">"disabled"</span>
+    <span class="attr">:class</span>=<span class="string">"[
+      'inline-flex items-center justify-center font-semibold rounded-full transition-colors',
+      sizeClasses, variantClasses,
+      { 'opacity-50 cursor-not-allowed': disabled }
+    ]"</span>
+  <span class="tag">&gt;</span>
+    <span class="tag">&lt;slot /&gt;</span>
+  <span class="tag">&lt;/component&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> props = <span class="fn">withDefaults</span>(<span class="fn">defineProps</span>&lt;{
+  variant?: <span class="type">'primary'</span> | <span class="type">'secondary'</span> | <span class="type">'ghost'</span>
+  size?:    <span class="type">'sm'</span> | <span class="type">'md'</span> | <span class="type">'lg'</span>
+  disabled?: <span class="type">boolean</span>
+  href?:    <span class="type">string</span>
+}&gt;(), { variant: <span class="string">'primary'</span>, size: <span class="string">'md'</span>, disabled: <span class="keyword">false</span> })
+
+<span class="keyword">const</span> variantClasses = <span class="fn">computed</span>(() => ({
+  primary:   <span class="string">'bg-teal-600 text-white hover:bg-teal-500'</span>,
+  secondary: <span class="string">'bg-white text-teal-600 border border-teal-600'</span>,
+  ghost:     <span class="string">'bg-transparent text-teal-600 hover:bg-teal-50'</span>,
+}[props.variant]))
+
+<span class="keyword">const</span> sizeClasses = <span class="fn">computed</span>(() => ({
+  sm: <span class="string">'text-sm px-4 py-1.5'</span>,
+  md: <span class="string">'text-base px-6 py-2.5'</span>,
+  lg: <span class="string">'text-lg px-8 py-3'</span>,
+}[props.size]))
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ── ATOM 2: TYPOGRAPHY ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill atom-pill">Atom 2</span>
+      <h2 style="margin:0;">Typography</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">📁 components/atoms/BaseTypography.vue</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#0d9488;margin-bottom:8px;">OVERLINE LABEL</div>
+      <div style="font-size:36px;font-weight:900;color:white;line-height:1.1;margin-bottom:8px;">H1 — Hero Heading</div>
+      <div style="font-size:28px;font-weight:700;color:white;margin-bottom:8px;">H2 — Section Title</div>
+      <div style="font-size:22px;font-weight:600;color:white;margin-bottom:8px;">H3 — Sub-section</div>
+      <div style="font-size:18px;font-weight:600;color:white;margin-bottom:8px;">H4 — Card Title</div>
+      <div style="font-size:14px;color:#94a3b8;line-height:1.7;margin-bottom:8px;">Body — Paragraph text used for descriptions and content sections with relaxed line height for readability.</div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">Caption — Supporting text used inside cards and beneath images.</div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Typography atom enforces a consistent typographic scale across all pages. It prevents ad-hoc Tailwind text classes, ensuring visual consistency. Used in hero headings, section labels, card titles, body paragraphs, and captions throughout the platform.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Variant</th><th>Mobile</th><th>Desktop</th></tr>
+      <tr><td>h1</td><td>text-4xl</td><td>md:text-6xl</td></tr>
+      <tr><td>h2</td><td>text-3xl</td><td>md:text-4xl</td></tr>
+      <tr><td>h3–caption</td><td colspan="2">Fixed size — no breakpoint change</td></tr>
+    </table>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;component</span> <span class="attr">:is</span>=<span class="string">"tag"</span>
+    <span class="attr">:class</span>=<span class="string">"[typeClasses, colorClasses]"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;slot /&gt;</span>
+  <span class="tag">&lt;/component&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> props = <span class="fn">withDefaults</span>(<span class="fn">defineProps</span>&lt;{
+  variant?: <span class="type">'h1'</span>|<span class="type">'h2'</span>|<span class="type">'h3'</span>|<span class="type">'h4'</span>|<span class="type">'body'</span>|<span class="type">'caption'</span>|<span class="type">'overline'</span>
+  color?:   <span class="type">'default'</span>|<span class="type">'muted'</span>|<span class="type">'primary'</span>|<span class="type">'white'</span>
+  tag?:     <span class="type">string</span>
+}&gt;(), { variant: <span class="string">'body'</span>, color: <span class="string">'default'</span> })
+
+<span class="keyword">const</span> typeClasses = <span class="fn">computed</span>(() => ({
+  h1:      <span class="string">'text-4xl md:text-6xl font-bold leading-tight tracking-tight'</span>,
+  h2:      <span class="string">'text-3xl md:text-4xl font-bold leading-snug'</span>,
+  h3:      <span class="string">'text-2xl font-semibold leading-snug'</span>,
+  h4:      <span class="string">'text-xl font-semibold'</span>,
+  body:    <span class="string">'text-base leading-relaxed'</span>,
+  caption: <span class="string">'text-sm leading-relaxed'</span>,
+  overline:<span class="string">'text-xs uppercase tracking-widest font-medium'</span>,
+}[props.variant]))
+
+<span class="keyword">const</span> colorClasses = <span class="fn">computed</span>(() => ({
+  default: <span class="string">'text-gray-800'</span>,
+  muted:   <span class="string">'text-gray-500'</span>,
+  primary: <span class="string">'text-teal-600'</span>,
+  white:   <span class="string">'text-white'</span>,
+}[props.color]))
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ── ATOM 3: COLOR TOKEN ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill atom-pill">Atom 3</span>
+      <h2 style="margin:0;">Color Tokens</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">📁 components/atoms/ColorToken.vue</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="display:flex; flex-wrap:wrap; gap:24px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:64px;height:64px;background:#0d9488;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div>
+        <div style="text-align:center;"><div style="font-size:11px;font-weight:700;color:white;">Primary</div><div style="font-size:11px;color:#64748b;">#0d9488</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:64px;height:64px;background:#2dd4bf;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div>
+        <div style="text-align:center;"><div style="font-size:11px;font-weight:700;color:white;">Accent</div><div style="font-size:11px;color:#64748b;">#2dd4bf</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:64px;height:64px;background:#030712;border-radius:12px;border:1px solid rgba(255,255,255,0.2);"></div>
+        <div style="text-align:center;"><div style="font-size:11px;font-weight:700;color:white;">Page BG</div><div style="font-size:11px;color:#64748b;">#030712</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:64px;height:64px;background:#6b7280;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div>
+        <div style="text-align:center;"><div style="font-size:11px;font-weight:700;color:white;">Muted</div><div style="font-size:11px;color:#64748b;">#6b7280</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="width:64px;height:64px;background:#ffffff;border-radius:12px;border:1px solid rgba(255,255,255,0.1);"></div>
+        <div style="text-align:center;"><div style="font-size:11px;font-weight:700;color:white;">White</div><div style="font-size:11px;color:#64748b;">#ffffff</div></div>
+      </div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The ColorToken atom is a documentation-only component used to display the platform's design token color palette. It is used exclusively in design system showcase pages, not in production pages. It communicates design tokens visually to developers and stakeholders.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <p>Displayed in a <code style="color:#86efac;">flex-wrap</code> row that wraps on small screens. Swatch size is fixed at <code style="color:#86efac;">w-16 h-16</code> — large enough to be visible on mobile. No breakpoint changes needed as this is a documentation component.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"flex flex-col items-center gap-2"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span>
+      <span class="attr">:class</span>=<span class="string">"['w-16 h-16 rounded-xl shadow-sm border', bgClass]"</span>
+      <span class="attr">:aria-label</span>=<span class="string">"`Color swatch: ${name}`"</span>
+      <span class="attr">role</span>=<span class="string">"img"</span>
+    <span class="tag">/&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"text-center"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="string">"text-xs font-semibold text-gray-700"</span><span class="tag">&gt;</span>{{ name }}<span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="string">"text-xs text-gray-400"</span><span class="tag">&gt;</span>{{ hex }}<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="fn">defineProps</span>&lt;{
+  name:    <span class="type">string</span>   <span class="comment">// Token label e.g. "Primary"</span>
+  hex:     <span class="type">string</span>   <span class="comment">// Hex value e.g. "#0d9488"</span>
+  bgClass: <span class="type">string</span>   <span class="comment">// Tailwind class e.g. "bg-teal-600"</span>
+}&gt;()
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ── ATOM 4: ICON ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill atom-pill">Atom 4</span>
+      <h2 style="margin:0;">Icon</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">📁 components/atoms/BaseIcon.vue</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="display:flex; align-items:flex-end; gap:32px; flex-wrap:wrap;">
+      <div style="text-align:center;"><span style="font-size:12px;">🏝️</span><div style="font-size:11px;color:#64748b;margin-top:6px;">sm</div></div>
+      <div style="text-align:center;"><span style="font-size:20px;">🏝️</span><div style="font-size:11px;color:#64748b;margin-top:6px;">md</div></div>
+      <div style="text-align:center;"><span style="font-size:30px;">🏝️</span><div style="font-size:11px;color:#64748b;margin-top:6px;">lg</div></div>
+      <div style="text-align:center;"><span style="font-size:48px;">🏝️</span><div style="font-size:11px;color:#64748b;margin-top:6px;">xl</div></div>
+      <div style="width:1px;height:60px;background:rgba(255,255,255,0.06);"></div>
+      <div style="text-align:center;"><span style="font-size:20px;">📍</span><div style="font-size:11px;color:#64748b;margin-top:6px;">Location</div></div>
+      <div style="text-align:center;"><span style="font-size:20px;">🕗</span><div style="font-size:11px;color:#64748b;margin-top:6px;">Hours</div></div>
+      <div style="text-align:center;"><span style="font-size:20px;">🎟️</span><div style="font-size:11px;color:#64748b;margin-top:6px;">Tickets</div></div>
+      <div style="text-align:center;"><span style="font-size:20px;">🚢</span><div style="font-size:11px;color:#64748b;margin-top:6px;">Boat</div></div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Icon atom renders emoji icons with consistent sizing and accessibility behavior — without importing any external icon library, keeping the bundle size minimal for 3G/4G users. Used in navigation items, visit info cards, the heritage grid empty state, and hero sections.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <p>Size is controlled via the <code style="color:#86efac;">size</code> prop only — no breakpoint changes inside the component. The parent decides which size to use. When <code style="color:#86efac;">label</code> is provided, <code style="color:#86efac;">aria-label</code> is set (accessible). When decorative, <code style="color:#86efac;">aria-hidden="true"</code> is applied automatically.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;span</span>
+    <span class="attr">:class</span>=<span class="string">"['inline-flex items-center justify-center select-none', sizeClass]"</span>
+    <span class="attr">:aria-label</span>=<span class="string">"label"</span>
+    <span class="attr">:aria-hidden</span>=<span class="string">"!label"</span>
+    <span class="attr">role</span>=<span class="string">"img"</span>
+  <span class="tag">&gt;</span>
+    {{ emoji }}
+  <span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> props = <span class="fn">withDefaults</span>(<span class="fn">defineProps</span>&lt;{
+  emoji:  <span class="type">string</span>
+  label?: <span class="type">string</span>
+  size?:  <span class="type">'sm'</span> | <span class="type">'md'</span> | <span class="type">'lg'</span> | <span class="type">'xl'</span>
+}&gt;(), { size: <span class="string">'md'</span> })
+
+<span class="keyword">const</span> sizeClass = <span class="fn">computed</span>(() => ({
+  sm: <span class="string">'text-sm'</span>, md: <span class="string">'text-xl'</span>,
+  lg: <span class="string">'text-3xl'</span>, xl: <span class="string">'text-5xl'</span>,
+}[props.size]))
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ── ATOM 5: IMAGE ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill atom-pill">Atom 5</span>
+      <h2 style="margin:0;">Image</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">📁 components/atoms/BaseImage.vue</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;">
+      <div>
+        <div style="width:160px;height:100px;background:linear-gradient(135deg,#0d9488,#0284c7);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:32px;">🏝️</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px;text-align:center;">rounded="lg"</div>
+      </div>
+      <div>
+        <div style="width:160px;height:100px;background:linear-gradient(135deg,#7c3aed,#0d9488);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;">🌊</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px;text-align:center;">rounded="md"</div>
+      </div>
+      <div>
+        <div style="width:160px;height:100px;background:linear-gradient(135deg,#ea580c,#0d9488);border-radius:0;display:flex;align-items:center;justify-content:center;font-size:32px;">🦇</div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px;text-align:center;">rounded="none"</div>
+      </div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Image atom wraps all content images in the platform — centralizing lazy loading, alt text enforcement, and border radius. Used for island thumbnails in cards (<code style="color:#86efac;">rounded="lg"</code>, <code style="color:#86efac;">lazy=true</code>) and hero images (<code style="color:#86efac;">rounded="none"</code>, <code style="color:#86efac;">lazy=false</code>). Any future image optimizations only need one change here.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Property</th><th>Behavior</th></tr>
+      <tr><td>Width</td><td>w-full — fills parent container</td></tr>
+      <tr><td>Height</td><td>h-full — fills parent container height</td></tr>
+      <tr><td>Fit</td><td>object-cover — maintains aspect ratio, crops to fill</td></tr>
+      <tr><td>Loading</td><td>lazy by default; set lazy=false for hero images</td></tr>
+    </table>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;figure</span> <span class="attr">:class</span>=<span class="string">"['overflow-hidden', roundedClass]"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span>
+      <span class="attr">:src</span>=<span class="string">"src"</span>   <span class="attr">:alt</span>=<span class="string">"alt"</span>
+      <span class="attr">:width</span>=<span class="string">"width"</span>   <span class="attr">:height</span>=<span class="string">"height"</span>
+      <span class="attr">:loading</span>=<span class="string">"lazy ? 'lazy' : 'eager'"</span>
+      <span class="attr">:class</span>=<span class="string">"['w-full h-full object-cover', roundedClass]"</span>
+    <span class="tag">/&gt;</span>
+    <span class="tag">&lt;figcaption</span> <span class="attr">v-if</span>=<span class="string">"caption"</span>
+      <span class="attr">class</span>=<span class="string">"text-xs text-gray-400 mt-1 text-center"</span><span class="tag">&gt;</span>
+      {{ caption }}
+    <span class="tag">&lt;/figcaption&gt;</span>
+  <span class="tag">&lt;/figure&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> props = <span class="fn">withDefaults</span>(<span class="fn">defineProps</span>&lt;{
+  src:      <span class="type">string</span>    <span class="comment">// Image URL</span>
+  alt:      <span class="type">string</span>    <span class="comment">// Required alt text</span>
+  caption?: <span class="type">string</span>    <span class="comment">// Optional caption</span>
+  rounded?: <span class="type">'none'</span>|<span class="type">'sm'</span>|<span class="type">'md'</span>|<span class="type">'lg'</span>|<span class="type">'full'</span>
+  lazy?:    <span class="type">boolean</span>   <span class="comment">// Native lazy loading</span>
+}&gt;(), { rounded: <span class="string">'md'</span>, lazy: <span class="keyword">true</span> })
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ═══════════════════════════ MOLECULES ═══════════════════════════ -->
+  <hr />
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:32px;">
+    <span class="pill molecule-pill" style="font-size:13px; padding:6px 16px;">Level 2</span>
+    <h2 style="margin:0; font-size:36px;">Molecules</h2>
+  </div>
+  <p>Molecules are groups of two or more atoms that form a simple, reusable UI unit with a single clear purpose.</p>
+  <hr />
+
+  <!-- ── MOLECULE 1: HERITAGE CARD ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill molecule-pill">Molecule 1</span>
+      <h2 style="margin:0;">Heritage Card</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:8px;">📁 components/molecules/HeritageCard.vue</p>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">⚛️ Uses: BaseTypography, BaseButton</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="display:flex; justify-content:center;">
+      <div style="width:340px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; overflow:hidden;">
+        <div style="height:200px; background:linear-gradient(135deg,#0f4c75,#0d9488); display:flex; align-items:center; justify-content:center; font-size:72px; position:relative;">
+          🏝️
+          <span style="position:absolute;top:14px;left:14px;background:#0d9488;color:white;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;">⭐ Most Popular</span>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0d9488;margin-bottom:6px;">FEATURED ISLAND</div>
+          <div style="font-size:20px;font-weight:700;color:white;margin-bottom:10px;">Governor Island</div>
+          <div style="font-size:14px;color:#94a3b8;margin-bottom:20px;line-height:1.6;">The largest and most developed island with cottages and a panoramic viewing deck.</div>
+          <button style="background:transparent;color:#0d9488;font-weight:700;padding:8px 20px;border-radius:999px;border:2px solid #0d9488;cursor:pointer;font-size:14px;">Learn More</button>
+        </div>
+      </div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Heritage Card molecule displays individual island previews in the Heritage Grid. Each card shows a thumbnail, category label, title, short description, and a Learn More button that triggers a modal. <em>"The Heritage Card is used exclusively for displaying tourist site previews in a responsive heritage-site grid."</em></p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Breakpoint</th><th>Grid Columns</th><th>Card Behavior</th></tr>
+      <tr><td>Mobile (&lt; sm)</td><td>1 column</td><td>Full width</td></tr>
+      <tr><td>Tablet (sm)</td><td>2 columns</td><td>Full width in cell</td></tr>
+      <tr><td>Desktop (lg)</td><td>3 columns</td><td>Full width in cell</td></tr>
+    </table>
+    <p>Image height fixed at <code style="color:#86efac;">h-48</code> across all sizes. Description clamped to 2 lines via <code style="color:#86efac;">line-clamp-2</code> to keep equal card heights.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;article</span> <span class="attr">class</span>=<span class="string">"bg-white rounded-2xl shadow-sm overflow-hidden
+             hover:shadow-md transition-shadow"</span><span class="tag">&gt;</span>
+    <span class="comment">&lt;!-- Image --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"relative h-48 overflow-hidden"</span>
+         <span class="attr">style</span>=<span class="string">"background-color:#ccfbf1"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;img</span> <span class="attr">v-if</span>=<span class="string">"image"</span> <span class="attr">:src</span>=<span class="string">"image"</span> <span class="attr">:alt</span>=<span class="string">"title"</span>
+           <span class="attr">loading</span>=<span class="string">"lazy"</span> <span class="attr">class</span>=<span class="string">"w-full h-full object-cover"</span> <span class="tag">/&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">v-if</span>=<span class="string">"badge"</span>
+        <span class="attr">class</span>=<span class="string">"absolute top-3 left-3 bg-teal-600 text-white
+               text-xs font-semibold px-3 py-1 rounded-full"</span><span class="tag">&gt;</span>
+        {{ badge }}
+      <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="comment">&lt;!-- Content uses Atoms --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"p-5"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;BaseTypography</span> <span class="attr">variant</span>=<span class="string">"overline"</span> <span class="attr">color</span>=<span class="string">"primary"</span><span class="tag">&gt;</span>
+        {{ category }}
+      <span class="tag">&lt;/BaseTypography&gt;</span>
+      <span class="tag">&lt;BaseTypography</span> <span class="attr">variant</span>=<span class="string">"h4"</span><span class="tag">&gt;</span>{{ title }}<span class="tag">&lt;/BaseTypography&gt;</span>
+      <span class="tag">&lt;BaseTypography</span> <span class="attr">variant</span>=<span class="string">"caption"</span> <span class="attr">color</span>=<span class="string">"muted"</span>
+        <span class="attr">class</span>=<span class="string">"line-clamp-2"</span><span class="tag">&gt;</span>{{ description }}<span class="tag">&lt;/BaseTypography&gt;</span>
+      <span class="tag">&lt;BaseButton</span> <span class="attr">variant</span>=<span class="string">"secondary"</span> <span class="attr">size</span>=<span class="string">"sm"</span>
+        <span class="attr">@click</span>=<span class="string">"$emit('learn-more')"</span><span class="tag">&gt;</span>
+        Learn More
+      <span class="tag">&lt;/BaseButton&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/article&gt;</span>
+<span class="tag">&lt;/template&gt;</span></pre>
+  </div>
+
+  <!-- ── MOLECULE 2: SEARCH FORM ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill molecule-pill">Molecule 2</span>
+      <h2 style="margin:0;">Search Form</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:8px;">📁 components/molecules/SearchForm.vue</p>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">⚛️ Uses: BaseButton, BaseIcon</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box">
+      <div style="font-size:11px;color:#64748b;margin-bottom:12px;">Desktop (side by side):</div>
+      <div style="display:flex; gap:16px; align-items:center; margin-bottom:20px;">
+        <div style="flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:999px; padding:14px 24px; color:#64748b; font-size:15px;">🔍 &nbsp;Search heritage sites...</div>
+        <button style="background:#0d9488;color:white;font-weight:700;padding:14px 28px;border-radius:999px;border:none;cursor:pointer;font-size:15px;white-space:nowrap;">🔍 Search</button>
+      </div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:12px;">Mobile (stacked):</div>
+      <div style="max-width:360px;">
+        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:999px; padding:14px 24px; color:#64748b; font-size:15px; margin-bottom:12px;">🔍 &nbsp;Search heritage sites...</div>
+        <button style="background:#0d9488;color:white;font-weight:700;padding:14px 24px;border-radius:999px;border:none;cursor:pointer;font-size:15px;width:100%;">🔍 Search</button>
+      </div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Search Form molecule is used at the top of the Heritage Grid organism to allow users to filter islands by name or description. It emits a <code style="color:#86efac;">search</code> event with the typed query — all filtering logic lives in the parent. <em>"The Search Form is used exclusively as an inline filter for the Heritage Grid — not as a global site search."</em></p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Breakpoint</th><th>Layout</th></tr>
+      <tr><td>Mobile (&lt; sm)</td><td>Stacked — input full-width on top, button below</td></tr>
+      <tr><td>Tablet+ (sm+)</td><td>Side by side — input flex-1, button inline</td></tr>
+    </table>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;form</span> <span class="attr">role</span>=<span class="string">"search"</span>
+    <span class="attr">class</span>=<span class="string">"flex flex-col sm:flex-row gap-3 w-full"</span>
+    <span class="attr">@submit.prevent</span>=<span class="string">"onSubmit"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">:for</span>=<span class="string">"inputId"</span> <span class="attr">class</span>=<span class="string">"sr-only"</span><span class="tag">&gt;</span>
+      {{ placeholder }}
+    <span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">:id</span>=<span class="string">"inputId"</span> <span class="attr">v-model</span>=<span class="string">"query"</span>
+      <span class="attr">type</span>=<span class="string">"search"</span> <span class="attr">:placeholder</span>=<span class="string">"placeholder"</span>
+      <span class="attr">class</span>=<span class="string">"flex-1 px-5 py-3 rounded-full border border-gray-300
+             focus:ring-2 focus:ring-teal-500"</span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;BaseButton</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">variant</span>=<span class="string">"primary"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;BaseIcon</span> <span class="attr">emoji</span>=<span class="string">"🔍"</span> <span class="attr">size</span>=<span class="string">"sm"</span> <span class="tag">/&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="string">"ml-2"</span><span class="tag">&gt;</span>Search<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/BaseButton&gt;</span>
+  <span class="tag">&lt;/form&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> emit = <span class="fn">defineEmits</span>&lt;{ search: [query: <span class="type">string</span>] }&gt;()
+<span class="keyword">const</span> query = <span class="fn">ref</span>(<span class="string">''</span>)
+<span class="keyword">const</span> inputId = <span class="string">`search-${Math.random().toString(36).slice(2,7)}`</span>
+<span class="keyword">function</span> <span class="fn">onSubmit</span>() { emit(<span class="string">'search'</span>, query.value.<span class="fn">trim</span>()) }
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ── MOLECULE 3: NAVIGATION ITEM ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill molecule-pill">Molecule 3</span>
+      <h2 style="margin:0;">Navigation Item</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:8px;">📁 components/molecules/NavigationItem.vue</p>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">⚛️ Uses: BaseIcon</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div style="padding:8px 16px; border-radius:8px; color:#6b7280; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px;">🏠 Home</div>
+      <div style="padding:8px 16px; border-radius:8px; background:rgba(255,255,255,0.05); color:#9ca3af; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px;">ℹ️ About <span style="font-size:10px;color:#64748b;">(hover)</span></div>
+      <div style="padding:8px 16px; border-radius:8px; background:rgba(20,184,166,0.15); color:#0d9488; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px;">🗺️ Islands <span style="font-size:10px;color:#0d9488;">(active)</span></div>
+      <div style="padding:8px 16px; border-radius:8px; color:#6b7280; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px;">📅 Visit</div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Navigation Item molecule renders individual nav links inside the Header Navigation organism. It auto-detects the current route and applies an active style. It renders as a <code style="color:#86efac;">NuxtLink</code> with <code style="color:#86efac;">aria-current="page"</code> when active for screen reader accessibility.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Breakpoint</th><th>Behavior</th></tr>
+      <tr><td>Mobile (&lt; md)</td><td>Stacked vertically inside mobile drawer</td></tr>
+      <tr><td>Desktop (md+)</td><td>Horizontal inline row inside header</td></tr>
+    </table>
+    <p>The component is layout-agnostic — it is always a <code style="color:#86efac;">&lt;li&gt;</code> element. The parent HeaderNavigation controls orientation.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;li&gt;</span>
+    <span class="tag">&lt;NuxtLink</span> <span class="attr">:to</span>=<span class="string">"to"</span>
+      <span class="attr">:aria-current</span>=<span class="string">"isActive ? 'page' : undefined"</span>
+      <span class="attr">:class</span>=<span class="string">"[
+        'flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors',
+        'focus:outline-none focus:ring-2 focus:ring-teal-500',
+        isActive
+          ? 'bg-teal-50 text-teal-700'
+          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+      ]"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;BaseIcon</span> <span class="attr">v-if</span>=<span class="string">"icon"</span> <span class="attr">:emoji</span>=<span class="string">"icon"</span>
+        <span class="attr">size</span>=<span class="string">"sm"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span> <span class="tag">/&gt;</span>
+      <span class="tag">&lt;span&gt;</span>{{ label }}<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/NuxtLink&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> props = <span class="fn">defineProps</span>&lt;{
+  label: <span class="type">string</span>
+  to:    <span class="type">string</span>
+  icon?: <span class="type">string</span>
+}&gt;()
+<span class="keyword">const</span> route = <span class="fn">useRoute</span>()
+<span class="keyword">const</span> isActive = <span class="fn">computed</span>(() => route.path === props.to)
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ═══════════════════════════ ORGANISMS ═══════════════════════════ -->
+  <hr />
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:32px;">
+    <span class="pill organism-pill" style="font-size:13px; padding:6px 16px;">Level 3</span>
+    <h2 style="margin:0; font-size:36px;">Organisms</h2>
+  </div>
+  <p>Organisms are complex, self-contained UI sections composed of molecules and atoms. They form distinct sections of a page.</p>
+  <hr />
+
+  <!-- ── ORGANISM 1: HERITAGE GRID ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill organism-pill">Organism 1</span>
+      <h2 style="margin:0;">Heritage Grid</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:8px;">📁 components/organisms/HeritageGrid.vue</p>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">🧬 Uses: HeritageCard, SearchForm + BaseTypography, BaseIcon, BaseButton</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box">
+      <div style="text-align:center; margin-bottom:24px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0d9488;margin-bottom:4px;">DISCOVER THE ISLANDS</div>
+        <div style="font-size:24px;font-weight:900;color:white;margin-bottom:4px;">Island Highlights</div>
+        <div style="font-size:13px;color:#64748b;">Explore the most iconic islands within Hundred Islands National Park.</div>
+      </div>
+      <div style="max-width:400px;margin:0 auto 24px;display:flex;gap:10px;">
+        <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:10px 16px;color:#64748b;font-size:13px;">🔍 Search heritage sites...</div>
+        <button style="background:#0d9488;color:white;font-weight:700;padding:10px 16px;border-radius:999px;border:none;font-size:13px;">Search</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;text-align:center;">
+          <div style="height:60px;background:linear-gradient(135deg,#0f4c75,#0d9488);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:8px;">🏝️</div>
+          <div style="font-size:12px;font-weight:700;color:white;">Governor Island</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;text-align:center;">
+          <div style="height:60px;background:linear-gradient(135deg,#164e63,#0d9488);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:8px;">🐚</div>
+          <div style="font-size:12px;font-weight:700;color:white;">Children's Island</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;text-align:center;">
+          <div style="height:60px;background:linear-gradient(135deg,#064e3b,#0d9488);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:8px;">⛺</div>
+          <div style="font-size:12px;font-weight:700;color:white;">Quezon Island</div>
+        </div>
+      </div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Heritage Grid is the main island discovery interface on the homepage. It combines a section header, a SearchForm for live filtering, and a responsive grid of HeritageCard molecules. It manages its own search state internally and emits a <code style="color:#86efac;">learn-more</code> event when a card is clicked, which the parent page uses to open the Island Modal.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Breakpoint</th><th>Grid Columns</th></tr>
+      <tr><td>Mobile (&lt; sm)</td><td>1 column</td></tr>
+      <tr><td>Tablet (sm)</td><td>2 columns</td></tr>
+      <tr><td>Desktop (lg+)</td><td>3 columns</td></tr>
+    </table>
+    <p>Uses Tailwind: <code style="color:#86efac;">grid-cols-1 sm:grid-cols-2 lg:grid-cols-3</code>. Search filtering is reactive — the <code style="color:#86efac;">filteredItems</code> computed property updates on every keystroke. An empty state with a clear button is shown when no results match.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;section</span> <span class="attr">:aria-labelledby</span>=<span class="string">"headingId"</span> <span class="attr">class</span>=<span class="string">"py-12 px-4"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"max-w-6xl mx-auto"</span><span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- Header using Atoms --&gt;</span>
+      <span class="tag">&lt;BaseTypography</span> <span class="attr">variant</span>=<span class="string">"overline"</span> <span class="attr">color</span>=<span class="string">"primary"</span><span class="tag">&gt;</span>Discover the Islands<span class="tag">&lt;/BaseTypography&gt;</span>
+      <span class="tag">&lt;BaseTypography</span> <span class="attr">:id</span>=<span class="string">"headingId"</span> <span class="attr">variant</span>=<span class="string">"h2"</span><span class="tag">&gt;</span>{{ title }}<span class="tag">&lt;/BaseTypography&gt;</span>
+
+      <span class="comment">&lt;!-- Search Molecule --&gt;</span>
+      <span class="tag">&lt;SearchForm</span> <span class="attr">@search</span>=<span class="string">"onSearch"</span> <span class="tag">/&gt;</span>
+
+      <span class="comment">&lt;!-- Grid of Card Molecules --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">v-if</span>=<span class="string">"filteredItems.length"</span>
+        <span class="attr">class</span>=<span class="string">"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;HeritageCard</span> <span class="attr">v-for</span>=<span class="string">"item in filteredItems"</span>
+          <span class="attr">:key</span>=<span class="string">"item.title"</span> <span class="attr">v-bind</span>=<span class="string">"item"</span>
+          <span class="attr">@learn-more</span>=<span class="string">"$emit('learn-more', item)"</span> <span class="tag">/&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+
+      <span class="comment">&lt;!-- Empty State --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">"text-center py-16"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;BaseIcon</span> <span class="attr">emoji</span>=<span class="string">"🔎"</span> <span class="attr">size</span>=<span class="string">"xl"</span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;BaseButton</span> <span class="attr">variant</span>=<span class="string">"ghost"</span> <span class="attr">@click</span>=<span class="string">"searchQuery = ''"</span><span class="tag">&gt;</span>
+          Clear search
+        <span class="tag">&lt;/BaseButton&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/section&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> props = <span class="fn">withDefaults</span>(<span class="fn">defineProps</span>&lt;{
+  title?: <span class="type">string</span>; items: <span class="type">HeritageItem</span>[]
+}&gt;(), { title: <span class="string">'Island Highlights'</span> })
+
+<span class="fn">defineEmits</span>&lt;{ <span class="string">'learn-more'</span>: [item: <span class="type">HeritageItem</span>] }&gt;()
+<span class="keyword">const</span> searchQuery = <span class="fn">ref</span>(<span class="string">''</span>)
+<span class="keyword">const</span> filteredItems = <span class="fn">computed</span>(() =>
+  props.items.<span class="fn">filter</span>(i =>
+    i.title.<span class="fn">toLowerCase</span>().<span class="fn">includes</span>(searchQuery.value.<span class="fn">toLowerCase</span>())
+  )
+)
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- ── ORGANISM 2: HEADER NAVIGATION ── -->
+  <div class="section-card">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+      <span class="pill organism-pill">Organism 2</span>
+      <h2 style="margin:0;">Header Navigation</h2>
+    </div>
+    <p style="color:#64748b; font-size:12px; margin-bottom:8px;">📁 components/organisms/HeaderNavigation.vue</p>
+    <p style="color:#64748b; font-size:12px; margin-bottom:32px;">🧬 Uses: NavigationItem + BaseIcon, BaseButton</p>
+
+    <span class="label">1. Visual Preview</span>
+    <div class="preview-box" style="padding:0; overflow:hidden;">
+      <!-- Desktop Nav -->
+      <div style="margin-bottom:2px;">
+        <div style="font-size:11px;color:#64748b;padding:12px 24px 8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Desktop View</div>
+        <div style="background:rgba(255,255,255,0.05); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.06); border-top:1px solid rgba(255,255,255,0.06); padding:0 32px; height:72px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+          <div style="display:flex; align-items:center; gap:10px; font-weight:900; font-size:18px; color:white; white-space:nowrap;">🏝️ <span style="color:#0d9488;">Hundred Islands</span></div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="padding:10px 18px; border-radius:10px; background:rgba(20,184,166,0.15); color:#0d9488; font-size:15px; font-weight:700; display:flex; align-items:center; gap:8px;">🏠 Home</div>
+            <div style="padding:10px 18px; border-radius:10px; color:#9ca3af; font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px;">ℹ️ About</div>
+            <div style="padding:10px 18px; border-radius:10px; color:#9ca3af; font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px;">🗺️ Islands</div>
+            <div style="padding:10px 18px; border-radius:10px; color:#9ca3af; font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px;">📅 Visit</div>
+          </div>
+          <button style="background:#0d9488;color:white;font-weight:700;padding:12px 28px;border-radius:999px;border:none;font-size:15px;white-space:nowrap;">Plan Your Visit</button>
+        </div>
+      </div>
+      <!-- Mobile Nav closed -->
+      <div style="margin-bottom:2px;">
+        <div style="font-size:11px;color:#64748b;padding:12px 24px 8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Mobile View — Closed</div>
+        <div style="background:rgba(255,255,255,0.05); border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06); padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between; max-width:400px; margin:0 24px;">
+          <div style="display:flex; align-items:center; gap:8px; font-weight:900; font-size:16px; color:white;">🏝️ <span style="color:#0d9488;">Hundred Islands</span></div>
+          <div style="background:rgba(255,255,255,0.08); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; color:white;">☰</div>
+        </div>
+      </div>
+      <!-- Mobile Nav open -->
+      <div style="padding:12px 24px 24px;">
+        <div style="font-size:11px;color:#64748b;padding:0 0 8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Mobile View — Open</div>
+        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); border-radius:16px; overflow:hidden; max-width:400px;">
+          <div style="padding:0 20px; height:64px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.06);">
+            <div style="font-weight:900; font-size:16px; color:white;">🏝️ <span style="color:#0d9488;">Hundred Islands</span></div>
+            <div style="background:rgba(255,255,255,0.08); width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; color:white;">✕</div>
+          </div>
+          <div style="padding:12px 16px; display:flex; flex-direction:column; gap:4px;">
+            <div style="padding:12px 16px; border-radius:10px; background:rgba(20,184,166,0.15); color:#0d9488; font-size:15px; font-weight:700; display:flex; align-items:center; gap:10px;">🏠 Home</div>
+            <div style="padding:12px 16px; border-radius:10px; color:#9ca3af; font-size:15px; font-weight:600; display:flex; align-items:center; gap:10px;">ℹ️ About</div>
+            <div style="padding:12px 16px; border-radius:10px; color:#9ca3af; font-size:15px; font-weight:600; display:flex; align-items:center; gap:10px;">🗺️ Islands</div>
+            <div style="padding:12px 16px; border-radius:10px; color:#9ca3af; font-size:15px; font-weight:600; display:flex; align-items:center; gap:10px;">📅 Visit</div>
+            <button style="background:#0d9488;color:white;font-weight:700;padding:12px;border-radius:999px;border:none;font-size:15px;width:100%;margin-top:8px;">Plan Your Visit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="label">2. Usage Context</span>
+    <p>The Header Navigation is the global site header placed on every page via <code style="color:#86efac;">layouts/default.vue</code>. It provides brand identity, primary navigation, a CTA button, and a responsive hamburger menu for mobile. It is sticky with a frosted glass effect so it remains readable over page content while scrolling.</p>
+
+    <span class="label">3. Responsive Logic</span>
+    <table style="margin-bottom:16px;">
+      <tr><th>Breakpoint</th><th>Behavior</th></tr>
+      <tr><td>Mobile (&lt; md)</td><td>Logo + hamburger only; nav links hidden in drawer</td></tr>
+      <tr><td>Desktop (md+)</td><td>Full horizontal nav with all links and CTA visible</td></tr>
+    </table>
+    <p>Uses <code style="color:#86efac;">v-show</code> on the mobile menu so the DOM is always present for accessibility. <code style="color:#86efac;">aria-expanded</code> and <code style="color:#86efac;">aria-controls</code> are set on the toggle button for screen readers.</p>
+
+    <span class="label">4. Code Reference</span>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;header</span> <span class="attr">class</span>=<span class="string">"sticky top-0 z-50 bg-white/90 backdrop-blur-sm
+              border-b border-gray-100 shadow-sm"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="string">"max-w-6xl mx-auto px-4 h-16
+             flex items-center justify-between"</span><span class="tag">&gt;</span>
+
+      <span class="comment">&lt;!-- Logo (BaseIcon atom) --&gt;</span>
+      <span class="tag">&lt;NuxtLink</span> <span class="attr">to</span>=<span class="string">"/"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;BaseIcon</span> <span class="attr">emoji</span>=<span class="string">"🏝️"</span> <span class="attr">size</span>=<span class="string">"md"</span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;span&gt;</span>Hundred Islands<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;/NuxtLink&gt;</span>
+
+      <span class="comment">&lt;!-- Desktop nav (NavigationItem molecules) --&gt;</span>
+      <span class="tag">&lt;nav</span> <span class="attr">class</span>=<span class="string">"hidden md:block"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="string">"flex items-center gap-1"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;NavigationItem</span> <span class="attr">v-for</span>=<span class="string">"item in navItems"</span>
+            <span class="attr">v-bind</span>=<span class="string">"item"</span> <span class="attr">:key</span>=<span class="string">"item.to"</span> <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+      <span class="tag">&lt;/nav&gt;</span>
+
+      <span class="comment">&lt;!-- CTA (BaseButton atom) --&gt;</span>
+      <span class="tag">&lt;BaseButton</span> <span class="attr">variant</span>=<span class="string">"primary"</span> <span class="attr">size</span>=<span class="string">"sm"</span>
+        <span class="attr">class</span>=<span class="string">"hidden sm:inline-flex"</span><span class="tag">&gt;</span>
+        Plan Your Visit
+      <span class="tag">&lt;/BaseButton&gt;</span>
+
+      <span class="comment">&lt;!-- Mobile toggle --&gt;</span>
+      <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="string">"md:hidden"</span>
+        <span class="attr">:aria-expanded</span>=<span class="string">"menuOpen"</span>
+        <span class="attr">aria-controls</span>=<span class="string">"mobile-menu"</span>
+        <span class="attr">@click</span>=<span class="string">"menuOpen = !menuOpen"</span><span class="tag">&gt;</span>
+        {{ menuOpen ? '✕' : '☰' }}
+      <span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+    <span class="comment">&lt;!-- Mobile drawer --&gt;</span>
+    <span class="tag">&lt;nav</span> <span class="attr">v-show</span>=<span class="string">"menuOpen"</span> <span class="attr">id</span>=<span class="string">"mobile-menu"</span>
+      <span class="attr">class</span>=<span class="string">"md:hidden bg-white px-4 pb-4"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;NavigationItem</span> <span class="attr">v-for</span>=<span class="string">"item in navItems"</span>
+        <span class="attr">v-bind</span>=<span class="string">"item"</span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;/header&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="tag">&lt;script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">"ts"</span><span class="tag">&gt;</span>
+<span class="keyword">const</span> menuOpen = <span class="fn">ref</span>(<span class="keyword">false</span>)
+<span class="keyword">const</span> navItems = [
+  { label: <span class="string">'Home'</span>,    to: <span class="string">'/'</span>,        icon: <span class="string">'🏠'</span> },
+  { label: <span class="string">'About'</span>,   to: <span class="string">'/#about'</span>,  icon: <span class="string">'ℹ️'</span>  },
+  { label: <span class="string">'Islands'</span>, to: <span class="string">'/islands'</span>, icon: <span class="string">'🗺️'</span> },
+  { label: <span class="string">'Visit'</span>,   to: <span class="string">'/#visit'</span>,  icon: <span class="string">'📅'</span> },
+]
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <!-- Summary Table -->
+  <hr />
+  <div class="section-card">
+    <h2 style="margin-bottom:24px;">Summary Table</h2>
+    <table>
+      <tr>
+        <th>Level</th><th>Component</th><th>File</th><th>Atoms Used</th><th>Molecules Used</th>
+      </tr>
+      <tr><td><span class="pill atom-pill">Atom</span></td><td>Button</td><td>atoms/BaseButton.vue</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="pill atom-pill">Atom</span></td><td>Typography</td><td>atoms/BaseTypography.vue</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="pill atom-pill">Atom</span></td><td>Color Tokens</td><td>atoms/ColorToken.vue</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="pill atom-pill">Atom</span></td><td>Icon</td><td>atoms/BaseIcon.vue</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="pill atom-pill">Atom</span></td><td>Image</td><td>atoms/BaseImage.vue</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="pill molecule-pill">Molecule</span></td><td>Heritage Card</td><td>molecules/HeritageCard.vue</td><td>BaseTypography, BaseButton</td><td>—</td></tr>
+      <tr><td><span class="pill molecule-pill">Molecule</span></td><td>Search Form</td><td>molecules/SearchForm.vue</td><td>BaseButton, BaseIcon</td><td>—</td></tr>
+      <tr><td><span class="pill molecule-pill">Molecule</span></td><td>Navigation Item</td><td>molecules/NavigationItem.vue</td><td>BaseIcon</td><td>—</td></tr>
+      <tr><td><span class="pill organism-pill">Organism</span></td><td>Heritage Grid</td><td>organisms/HeritageGrid.vue</td><td>BaseTypography, BaseIcon, BaseButton</td><td>HeritageCard, SearchForm</td></tr>
+      <tr><td><span class="pill organism-pill">Organism</span></td><td>Header Navigation</td><td>organisms/HeaderNavigation.vue</td><td>BaseIcon, BaseButton</td><td>NavigationItem</td></tr>
+    </table>
+  </div>
+
+  <div style="text-align:center; padding:40px 0; color:#374151; font-size:13px;">
+    Deliverable 1.2 — Atomic Design System Manual · Pangasinan Heritage Digital Showcase · Alaminos' Hundred Islands
+  </div>
+
+</div>
+</body>
+</html>
