@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/main.css'],
+  app: {
+    baseURL: '/pangasinan-heritage/',
+  },
   nitro: {
     prerender: {
       crawlLinks: true,
