@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/main.css'],
+  runtimeConfig: {
+    public: {
+      imageBase: process.env.GITHUB_ACTIONS ? '/pangasinan-heritage' : '',
+    },
+  },
   app: {
     baseURL: process.env.GITHUB_ACTIONS ? '/pangasinan-heritage/' : '/',
     head: {

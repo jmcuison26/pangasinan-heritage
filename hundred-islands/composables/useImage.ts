@@ -1,5 +1,6 @@
 export function useImage() {
-  const base = process.env.GITHUB_ACTIONS ? '/pangasinan-heritage' : ''
+  const config = useRuntimeConfig()
+  const base = (config.public.imageBase as string) ?? ''
 
   function img(path: string): string {
     return `${base}${path}`
