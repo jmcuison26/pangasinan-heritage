@@ -213,6 +213,7 @@
 <script setup lang="ts">
 useHead({ title: "Alaminos' Hundred Islands — Pangasinan Heritage" })
 
+const { img } = useImage()
 const modalOpen = ref(false)
 const selectedIsland = ref<any>(null)
 const searchQuery = ref('')
@@ -234,7 +235,7 @@ const islands = [
     title: 'Governor Island',
     description: 'The largest and most developed island — cottages, swimming pool, and a panoramic viewing deck.',
     category: 'Featured Island',
-    image: '/images/Governor island.jpeg',
+    image: img('/images/Governor island.jpeg'),
     badge: 'Most Popular',
     fullDescription: 'Governor Island is one of the largest and most popular islands in Hundred Islands National Park. It is known for its elevated viewing area, where visitors can enjoy a panoramic view of the surrounding islands and the Lingayen Gulf. It is also a popular spot for sightseeing and photography.',
   },
@@ -242,35 +243,35 @@ const islands = [
     title: "Children's Island",
     description: 'Calm, shallow waters and a wide sandy beach — perfect for families and young visitors.',
     category: 'Family Island',
-    image: '/images/children island.jpeg',
+    image: img('/images/children island.jpeg'),
     fullDescription: "A shallow, calm beach with gentle waves — ideal for families and young visitors. The sandy shoreline and safe swimming areas make it the go-to island for kids. Its wide open beach is perfect for building sandcastles and wading in the warm, clear water.",
   },
   {
     title: 'Quezon Island',
     description: 'Named after President Manuel Quezon — great for camping, snorkeling, and vibrant coral reefs.',
     category: 'Adventure Island',
-    image: '/images/quezon island.jpg',
+    image: img('/images/quezon island.jpg'),
     fullDescription: 'Named after Philippine President Manuel L. Quezon, this island is one of the most popular destinations inside the park. It offers great snorkeling spots, camping areas, and a picturesque beach with colorful coral reefs.',
   },
   {
     title: 'Bat Cave Island',
     description: 'Dramatic limestone cliffs sheltering thousands of fruit bats that swarm spectacularly at dusk.',
     category: 'Nature Island',
-    image: '/images/bat-cave-island.jpg',
+    image: img('/images/bat-cave-island.jpg'),
     fullDescription: 'A dramatic limestone rock formation rising straight from the emerald waters of the Lingayen Gulf. Dense tropical vegetation clings to its jagged cliffs, sheltering a colony of fruit bats. At dusk, thousands of bats emerge in a breathtaking swarm.',
   },
   {
     title: 'Virgin Island',
     description: 'Pristine white sand and untouched turquoise waters — pure, unspoiled natural paradise.',
     category: 'Scenic Island',
-    image: '/images/virgin island.jpeg',
+    image: img('/images/virgin island.jpeg'),
     fullDescription: 'One of the most pristine and least developed islands in the park. Virgin Island lives up to its name — untouched white sand, crystal-clear turquoise waters, and unspoiled natural scenery perfect for peace and solitude.',
   },
   {
     title: 'Marcos Island',
     description: 'Vibrant coral reefs, sea turtles, and rich marine life beneath crystal-clear waters.',
     category: 'Diving Island',
-    image: '/images/marcos island.jpeg',
+    image: img('/images/marcos island.jpeg'),
     fullDescription: 'A well-known diving and snorkeling destination within Hundred Islands. Marcos Island is surrounded by vibrant coral reefs teeming with diverse marine life — from colorful reef fish to sea turtles.',
   },
 ]

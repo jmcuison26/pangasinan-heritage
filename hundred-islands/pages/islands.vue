@@ -3,7 +3,7 @@
 
     <!-- Hero -->
     <section class="relative h-80 md:h-[500px] flex items-end overflow-hidden">
-      <img src="/images/Governor island.jpeg" alt="Hundred Islands" class="absolute inset-0 w-full h-full object-cover" />
+      <img :src="img('/images/Governor island.jpeg')" alt="Hundred Islands" class="absolute inset-0 w-full h-full object-cover" />
       <div class="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/50 to-transparent" />
       <!-- Floating glow -->
       <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-32 bg-teal-600/20 blur-3xl pointer-events-none" />
@@ -183,6 +183,7 @@
 <script setup lang="ts">
 useHead({ title: 'All Islands — Hundred Islands National Park' })
 
+const { img } = useImage()
 const modalOpen = ref(false)
 const selectedIsland = ref<any>(null)
 
@@ -192,22 +193,22 @@ function openModal(island: any) {
 }
 
 const featuredIslands = [
-  { title: 'Governor Island', category: 'Featured Island', image: '/images/Governor island.jpeg',
+  { title: 'Governor Island', category: 'Featured Island', image: img('/images/Governor island.jpeg'),
     description: 'The largest and most developed island — cottages, swimming pool, and a panoramic viewing deck.',
     fullDescription: 'Governor Island is one of the largest and most popular islands in Hundred Islands National Park. It is known for its elevated viewing area, where visitors can enjoy a panoramic view of the surrounding islands and the Lingayen Gulf. It is also a popular spot for sightseeing and photography.' },
-  { title: "Children's Island", category: 'Family Island', image: '/images/children island.jpeg',
+  { title: "Children's Island", category: 'Family Island', image: img('/images/children island.jpeg'),
     description: 'Calm, shallow waters and a wide sandy beach — perfect for families and young visitors.',
     fullDescription: "A shallow, calm beach with gentle waves — ideal for families and young visitors. The sandy shoreline and safe swimming areas make it the go-to island for kids. Its wide open beach is perfect for building sandcastles and wading in the warm, clear water." },
-  { title: 'Quezon Island', category: 'Adventure Island', image: '/images/quezon island.jpg',
+  { title: 'Quezon Island', category: 'Adventure Island', image: img('/images/quezon island.jpg'),
     description: 'Named after President Quezon — great for camping, snorkeling, and vibrant coral reefs.',
     fullDescription: 'Named after Philippine President Manuel L. Quezon, this island is one of the most popular destinations inside the park. It offers great snorkeling spots, camping areas, and a picturesque beach with colorful coral reefs.' },
-  { title: 'Bat Cave Island', category: 'Nature Island', image: '/images/bat-cave-island.jpg',
+  { title: 'Bat Cave Island', category: 'Nature Island', image: img('/images/bat-cave-island.jpg'),
     description: 'Dramatic limestone cliffs sheltering thousands of fruit bats that swarm at dusk.',
     fullDescription: 'A dramatic limestone rock formation rising straight from the emerald waters of the Lingayen Gulf. Dense tropical vegetation clings to its jagged cliffs, sheltering a colony of fruit bats. At dusk, thousands of bats emerge in a breathtaking swarm.' },
-  { title: 'Virgin Island', category: 'Scenic Island', image: '/images/virgin island.jpeg',
+  { title: 'Virgin Island', category: 'Scenic Island', image: img('/images/virgin island.jpeg'),
     description: 'Pristine white sand and untouched turquoise waters — pure unspoiled paradise.',
     fullDescription: 'One of the most pristine and least developed islands in the park. Virgin Island lives up to its name — untouched white sand, crystal-clear turquoise waters, and unspoiled natural scenery perfect for peace and solitude.' },
-  { title: 'Marcos Island', category: 'Diving Island', image: '/images/marcos island.jpeg',
+  { title: 'Marcos Island', category: 'Diving Island', image: img('/images/marcos island.jpeg'),
     description: 'Vibrant coral reefs, sea turtles, and rich marine life beneath crystal-clear waters.',
     fullDescription: 'A well-known diving and snorkeling destination within Hundred Islands. Marcos Island is surrounded by vibrant coral reefs teeming with diverse marine life — from colorful reef fish to sea turtles.' },
 ]
@@ -229,7 +230,7 @@ const otherIslands = [
     description: 'Named after former First Lady Imelda Marcos — a piece of Philippine history.',
     fullDescription: 'Imelda Island was named after former Philippine First Lady Imelda Marcos. The island features a small beach and is often included in extended island-hopping tours, reflecting the political history of the region during the Marcos era.' },
   { title: 'Limestone Island', category: 'Geological Site',
-    image: '/images/limestone island.jpeg',
+    image: img('/images/limestone island.jpeg'),
     emoji: '🪨', bgColor: '#1e293b',
     description: 'Spectacular karst limestone formations carved by millions of years of wind and sea.',
     fullDescription: 'Limestone Island showcases some of the most dramatic geological formations in the entire park — towering karst limestone cliffs sculpted over millions of years by wind, rain, and sea erosion.' },

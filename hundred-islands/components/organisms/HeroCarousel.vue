@@ -83,39 +83,41 @@
 </template>
 
 <script setup lang="ts">
+const { img } = useImage()
+
 const slides = [
   {
-    image: '/images/Governor island.jpeg',
+    image: img('/images/Governor island.jpeg'),
     title: 'Governor Island',
     category: 'Featured Island',
     caption: 'The largest and most developed island — your perfect base camp.',
   },
   {
-    image: '/images/children island.jpeg',
+    image: img('/images/children island.jpeg'),
     title: "Children's Island",
     category: 'Family Island',
     caption: 'Calm, shallow waters ideal for families and young adventurers.',
   },
   {
-    image: '/images/quezon island.jpg',
+    image: img('/images/quezon island.jpg'),
     title: 'Quezon Island',
     category: 'Adventure Island',
     caption: 'Named after President Quezon — great for camping and snorkeling.',
   },
   {
-    image: '/images/bat-cave-island.jpg',
+    image: img('/images/bat-cave-island.jpg'),
     title: 'Bat Cave Island',
     category: 'Nature Island',
     caption: 'Dramatic limestone cliffs home to thousands of fruit bats.',
   },
   {
-    image: '/images/virgin island.jpeg',
+    image: img('/images/virgin island.jpeg'),
     title: 'Virgin Island',
     category: 'Scenic Island',
     caption: 'Pristine white sand and untouched turquoise waters.',
   },
   {
-    image: '/images/marcos island.jpeg',
+    image: img('/images/marcos island.jpeg'),
     title: 'Marcos Island',
     category: 'Diving Island',
     caption: 'Vibrant coral reefs and rich marine life beneath the surface.',
